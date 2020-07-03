@@ -116,6 +116,7 @@ val act20OrgMatchBySortedYear = SortedMap(act20OrgMatch.toArray:_*)
 println(s"Act 20 recipients who's companies name matches tech keywords: ${techKeywords}")
 act20OrgMatchBySortedYear
   .foreach {case (year, rows) => {
-    println(s"${year}:")
-    rows.foreach {row => println(s"\t${row.org}")}
+    println(s"\t${year}: ${rows.length}")
+    // Uncomment to display company names
+    //rows.foreach {row => println(s"\t\t${row.org}")}
   }}
