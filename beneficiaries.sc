@@ -63,19 +63,19 @@ val act20RowsFrom2019 = act20Rows.filter {row =>
 println(s"A total of ${act20RowsFrom2019.length} Act 20 beneficiaries approved in 2019.")
 
 // Get all Act 20 approved by year
-val act20RowsByUnsortedYear = act20Rows.groupBy {
-  row => row.approvalDate.year
-}
-import scala.collection.immutable.ListMap
+val act20RowsBySortedYear = act20Rows
+  .sortWith {(a, b) => a.approvalDate.year > b.approvalDate.year}
+  .groupBy {row =>
+    row.approvalDate.year
+  }
 println("The following are the number Act 20 recipients by year:")
-val act20RowsBySortedYear = ListMap(
-  act20RowsByUnsortedYear.toSeq.sortWith(_._1 < _._1):_*
-).foreach {tuple => 
-  println(s"\t${tuple._1}: ${tuple._2.length}")
-}
+import scala.collection.immutable.SortedMap
+val act20RowsBySortedYearMap = SortedMap(act20RowsBySortedYear.toArray:_*)
+act20RowsBySortedYearMap
+  .foreach {case (year, rows) => println(s"\t${year}: ${rows.length}")}
 
 // Get all Act 20 approved orgs that match 'tech' related terms
-val techKeywords = List(
+val techKeywords = (
   "ai",
   "app",
   "blockchain",
@@ -105,13 +105,17 @@ val techKeywords = List(
   "web",
 )
 val act20OrgMatch = act20Rows
-  .sortBy {_.org}
+  .sortWith {(a, b) => a.approvalDate.year > b.approvalDate.year}
   .filter {row => 
     val matches = techKeywords.map {word => row.org.toLowerCase.contains(word) }
     matches.exists {b => b == true}
   }
-  .map {_.org}
+  .groupBy {_.approvalDate.year}
+
+val act20OrgMatchBySortedYear = SortedMap(act20OrgMatch.toArray:_*)
 println(s"Act 20 recipients who's companies name matches tech keywords: ${techKeywords}")
-act20OrgMatch
-  .zipWithIndex
-  .foreach { pair => println(s"\t${pair._2 + 1}. ${pair._1}") }
+act20OrgMatchBySortedYear
+  .foreach {case (year, rows) => {
+    println(s"${year}:")
+    rows.foreach {row => println(s"\t${row.org}")}
+  }}
