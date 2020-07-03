@@ -75,7 +75,7 @@ act20RowsBySortedYearMap
   .foreach {case (year, rows) => println(s"\t${year}: ${rows.length}")}
 
 // Get all Act 20 approved orgs that match 'tech' related terms
-val techKeywords = (
+val techKeywords = List(
   "ai",
   "app",
   "blockchain",
