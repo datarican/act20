@@ -74,14 +74,29 @@ val act20RowsBySortedYear = ListMap(
   println(s"\t${tuple._1}: ${tuple._2.length}")
 }
 
-// Get all Act 20 approved orgs with name tech, software, digital, engineering
-val keywords = List("engineering", "digital", "tech", "solution", "software", "data")
+// Get all Act 20 approved orgs that match 'tech' related terms
+val techKeywords = List(
+  "digital",
+  "tech",
+  "solution",
+  "software",
+  "data",
+  "cyber",
+  "solucion",
+  "code",
+  "codigo",
+  "dev",
+  "desarrollo",
+  "programm",
+)
 val act20OrgMatch = act20Rows
   .sortBy {_.org}
   .filter {row => 
-    val bools = keywords.map {word => row.org.contains(word) }
-    bools.exists {b => b == true}
+    val matches = techKeywords.map {word => row.org.toLowerCase.contains(word) }
+    matches.exists {b => b == true}
   }
   .map {_.org}
-println(s"Act 20 recipients who's companies fonund in ${keywords}")
-act20OrgMatch.foreach(org => println(s"\t${org}"))
+println(s"Act 20 recipients who's companies name matches tech keywords: ${techKeywords}")
+act20OrgMatch
+  .zipWithIndex
+  .foreach { pair => println(s"\t${pair._2 + 1}. ${pair._1}") }
