@@ -72,7 +72,7 @@ println("The following are the number Act 20 recipients by year:")
 import scala.collection.immutable.SortedMap
 val act20RowsBySortedYearMap = SortedMap(act20RowsBySortedYear.toArray:_*)
 act20RowsBySortedYearMap
-  .foreach {case (year, rows) => println(s"\t${year}: ${rows.length}")}
+  .foreach {case (year, rows) => println(s"\t${year}: ${rows.length}"); rows.foreach(row => println(row.org))}
 
 // Get all Act 20 approved orgs that match 'tech' related terms
 val techKeywords = List(
@@ -81,8 +81,9 @@ val techKeywords = List(
   "blockchain",
   "code",
   "codigo",
-  "cyber",
+  "cloud",
   "crypto",
+  "cyber",
   "data",
   "digital",
   "desarrollo",
