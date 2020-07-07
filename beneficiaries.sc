@@ -1,6 +1,4 @@
 
-println("Running beneficiaries analysis...\n=================================")
-
 case class RowDate(day: Int, month: Int, year: Int)
 case class Row(law: String, org: String, approvalDate: RowDate)
 
@@ -13,13 +11,9 @@ def loadCSV(filename: String): Array[Row] = {
     val dateParts = arr(2).split("/")
     Seq(
       Row(
-        arr(0),
+        arr(0), 
         arr(1),
-        RowDate(
-          dateParts(0).toInt,
-          dateParts(1).toInt,
-          dateParts(2).toInt
-        )
+        RowDate(dateParts(0).toInt, dateParts(1).toInt, dateParts(2).toInt),
       )
     )
   }
@@ -36,6 +30,7 @@ def loadCSV(filename: String): Array[Row] = {
   createRows(lines.drop(1))
 }
 
+println("Running beneficiaries analysis...\n=================================")
 val filename = "beneficiarios.csv"
 println(s"About to process csv ${filename}")
 val data = loadCSV(filename)
