@@ -6,6 +6,7 @@ This repository contains scripts analyzing Puerto Rico's Department of Economic 
 * [Ammonite REPL](https://ammonite.io/)
 * Scala 2.12.10
 * Dataset `beneficiarios.csv` included in repository, [source](https://www.ddec.pr.gov/accesoinfo/#)
+* [Gnuplot](http://www.gnuplot.info/) for plotting or running `./plot.sh`
 
 ## Usage
 In your terminal
@@ -51,7 +52,11 @@ Act 20 recipients who's companies fonund in List(engineering, digital, tech, sol
 	Entech Design and Project Management Psc
 	Kastech Latam LLC
 	Paytech Corp
+        ...
 Watching for changes to 2 files... (Ctrl-C to exit)
 ```
 
-
+Running
+```./plot.sh```
+Lets you graph the results
+![beneficiarios](plot.png)
